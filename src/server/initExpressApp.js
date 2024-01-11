@@ -12,6 +12,5 @@ export const initExpressApp = (app) => {
     }))
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
-    app.use(express.static('src/static'))
     app.use(methodOverride('_method'))
 }
