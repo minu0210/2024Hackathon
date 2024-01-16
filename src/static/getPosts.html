@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시글</title>
+    <link rel="stylesheet" href="./css/selectStyle.css">
+    <!-- <script src="./js/getPosts.js" defer></script> -->
+    <script>
+window.addEventListener("load", () => {
+    async function bootstrap () {
+        const res = await fetch('/posts', {
+        method: 'get'
+        })
+
+        const posts = await res.json()
+        console.log(posts)
+        const postTags = posts.map(post => {
+        return `
+        <div class="item">
+            <span><br>${post.title}</span>
+            <p>${post.content}</p>
+            <div class="extra-info">
+                <p>작성일: ${post.createdAt}</p>
+                <p>수정일: ${post.updatedAt}</p>
+                <p>작성자: ${post.authorName}</p>
+            </div>
+            <div class="aTageBox">
+                <!--<a href="./updatePost.html?post_id=${post._id}">&nbsp;</a>-->
+                <br>
+                <form action="/posts/${post._id}?_method=DELETE" method='post'>
+                    <button id="select_deleteBt" style="cursor: pointer;">삭제</button>
+                <form>
+            </div>
+        </div>
+        `
+        })
+        document.querySelector('.contents').innerHTML = postTags.join('');
+    }
+            bootstrap()
+                .catch(err => {
+                    console.error(err)
+                })
+            })
+    </script>
+</head>
+
+<body>
+    <div class="wrap">
+        <header>
+            <form action="/signout" method="get">
+            <input type="submit" class="logoutBt" value="로그아웃"></input>
+        </form>
+            <!-- <div class="login_btBox">
+                <a href="#">로그인</a>|
+                <a href="#">회원가입</a>
+            </div> -->
+        </header>
+        <div class="container">
+            <h1>급식 후기</h1>
+            <div class="div">
+                <a href="./createPost.html" class="addBt">글 생성</a>
+            </div>
+            <div class="contents">
+            </div>
+        </div>
+        <!-- <footer>
+            <div class="aBox">    
+                <a href="./getPosts.html" target="_parent" rel="noopener noreferrer">급식 게시판</a>
+                <a href="./meal.html" target="_parent" rel="noopener noreferrer">오늘의 메뉴</a>
+            </div>
+        </footer> -->
+    </div>
+    <!--<script src="../script.js"></script>-->
+</body>
+
+</html>
