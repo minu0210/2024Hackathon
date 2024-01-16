@@ -1,4 +1,4 @@
-import User from '../db/users.schema.js'
+import User from '../server/models/users.schema.js'
 
 export default async function (id) {
     const user = await User.findOne({ id })
